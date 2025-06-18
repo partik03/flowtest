@@ -23,13 +23,15 @@ export interface HttpRequest {
 
 export interface HttpResponse {
   statusCode: number;  // e.g. 200
-  header: Record<string, string>;
+  headers: Record<string, string>;
   body: string;
   statusMessage: string;
   protoMajor: number;
   protoMinor: number;
   binary?: string;
   timestamp: Date;
+  statusText: string;
+  duration?: number;
 }
 
 export interface OutputBinary {

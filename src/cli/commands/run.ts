@@ -1,7 +1,8 @@
-import YamlParser from "../../parsers/yaml";
+import { YamlParser } from "../../parsers";
 import { InteractiveCommand, InteractiveOption } from "interactive-commander";
 import fs from 'fs';
-
+import { runTests } from "../../core";
+import { testSpinner } from "../../utils/ui";
 
 const yamlParser = new YamlParser();
 
@@ -26,13 +27,14 @@ export default new InteractiveCommand()
 
     try {
         const config = yamlParser.parse(filePath);
-        console.log(config.tests);
-        console.log(`Running tests from ${filePath}`);
+        testSpinner.succeed('Configuration loaded');
+
+        console.log(`\n�� Running tests from: ${filePath}`);
+        await runTests(config);
     } catch (error) {
         console.error(`Error parsing YAML file: ${error}`);
         return;
     }
-    
-    
+     
 })
 

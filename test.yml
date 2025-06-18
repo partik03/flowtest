@@ -1,29 +1,61 @@
 name: User API Tests
-baseUrl: https://api.example.com
+baseUrl: https://6852da710594059b23cf5e1a.mockapi.io/api/v1
 variables:
   userId: "{{random.string(10)}}"
   userName: "John Doe"
   userEmail: "john@example.com"
 tests:
-  - name: Create User
-    request:
-      method: POST
-      url: /users
-      headers:
-        Content-Type: application/json
-      body:
-        name: "{{userName}}"
-        email: "{{userEmail}}"
-    expect:
-      statusCode: 201
-      body:
-        id: "{{saveAs:userId}}"
-        name: John Doe
+  # - name: Create User
+  #   request:
+  #     method: POST
+  #     url: /users
+  #     headers:
+  #       Content-Type: application/json
+  #     body:
+  #       id: "{{userId}}"
+  #       name: "{{userName}}"
+  #       email: "{{userEmail}}"
+  #   expect:
+  #     statusCode: 201
+  #     body:
+  #       id: "{{saveAs:userId}}"
+  #       name: John Doe
+
+  # - name: Get User
+  #   request:
+  #     method: GET
+  #     url: /users/{{userId}}
+  #   expect:
+  #     statusCode: 200
+  #     body:
+  #       name: John Doe
+  #       email: john@example.com
+
+
+  # - name: Get User
+  #   request:
+  #     method: GET
+  #     url: /users/{{userId}}
+  #   expect:
+  #     statusCode: 200
+  #     body:
+  #       name: John Doe
+  #       email: john@example.com
+
 
   - name: Get User
     request:
       method: GET
-      url: /users/{{userId}}
+      url: /pos
+    expect:
+      statusCode: 200
+      body:
+        name: John Doe
+        email: john@example.com
+  - name: Get User
+    request:
+      method: GET
+      url: /pos
     expect:
       statusCode: 200
       body:

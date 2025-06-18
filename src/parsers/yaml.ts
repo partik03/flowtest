@@ -1,6 +1,6 @@
 import { parse, stringify} from "yaml";
 import { readFileSync } from "fs";
-import { YamlConfig, VariableContext } from "../types/parsers/yaml";
+import { YamlConfig, VariableContext } from "../types";
 
 export default class YamlParser {
 
@@ -52,10 +52,10 @@ export default class YamlParser {
                 throw new Error(`Invalid status code: ${test.expect.statusCode} for test case ${index + 1}`);
             }
 
-            if(test.expect.header) {
-                Object.keys(test.expect.header).forEach((key) => {
-                    if(typeof test.expect.header[key] !== 'string' && typeof test.expect.header[key] !== 'object') {
-                        throw new Error(`Invalid header value: ${test.expect.header[key]} for test case ${index + 1}`);
+            if(test.expect.headers) {
+                Object.keys(test.expect.headers).forEach((key) => {
+                    if(typeof test.expect.headers[key] !== 'string' && typeof test.expect.headers[key] !== 'object') {
+                        throw new Error(`Invalid header value: ${test.expect.headers[key]} for test case ${index + 1}`);
                     }
                 });
             }
@@ -92,7 +92,7 @@ export default class YamlParser {
                     result[key as keyof T] = value as any;
                 }
             }
-            return result;
+            return result
         }
 
         const result = {} as T;
@@ -110,6 +110,8 @@ export default class YamlParser {
             
             // Handle random.string(length)
             if (path.startsWith('random.string')) {
+                console.log("random.string", path);
+                
                 const lengthMatch = path.match(/random\.string\((\d+)\)/);
                 const length = lengthMatch ? parseInt(lengthMatch[1]) : 10;
                 return Math.random().toString(36).substring(2, length + 2);
@@ -117,6 +119,8 @@ export default class YamlParser {
             
             // Handle random.number(min,max)
             if (path.startsWith('random.number')) {
+                console.log("random.number", path);
+                
                 const numbersMatch = path.match(/random\.number\((\d+),(\d+)\)/);
                 if (numbersMatch) {
                     const min = parseInt(numbersMatch[1]);
