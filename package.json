@@ -1,0 +1,49 @@
+{
+  "name": "apiflow",
+  "version": "1.0.0",
+  "description": "Code-first API testing framework",
+  "bin": {
+    "apiflow": "./bin/cli.mjs"
+  },
+  "type": "module",
+  "files": [
+    "bin",
+    "build"
+  ],
+  "private": false,
+  "exports": {
+    "./cli": {
+      "types": "./build/cli.d.ts",
+      "require": "./build/cli.cjs",
+      "import": "./build/cli.mjs"
+    }
+  },
+  "scripts": {
+    "apiflow": "node --inspect=9229 ./bin/cli.mjs",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "interactive-commander": "^0.6.0",
+    "js-yaml": "^4.1.0",
+    "yaml": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

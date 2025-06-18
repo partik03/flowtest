@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "outDir": "build",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowUnreachableCode": true,
+    "allowSyntheticDefaultImports": true,
+  },
+  "include": ["src/**/*.ts", "types"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+} 
