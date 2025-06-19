@@ -10,8 +10,8 @@ export interface FormData {
 
 export interface HttpRequest {
   method: Method;
-  protoMajor: number;  // e.g. 1
-  protoMinor: number;  // e.g. 0
+  protoMajor: number; // e.g. 1
+  protoMinor: number; // e.g. 0
   url: string;
   urlParams?: Record<string, string>;
   header: Record<string, string>;
@@ -22,7 +22,7 @@ export interface HttpRequest {
 }
 
 export interface HttpResponse {
-  statusCode: number;  // e.g. 200
+  statusCode: number; // e.g. 200
   headers: Record<string, string>;
   body: string;
   statusMessage: string;
@@ -39,7 +39,7 @@ export interface OutputBinary {
   [key: string]: unknown;
 }
 
-export type AssertionType = string;  // Define specific assertion types if needed
+export type AssertionType = string; // Define specific assertion types if needed
 
 export interface HTTPSchema {
   metadata: Record<string, string>;

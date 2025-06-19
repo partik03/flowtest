@@ -1,3 +1,3 @@
-import runTests  from './runner';
+import runTests from './runner';
 
 export { runTests };

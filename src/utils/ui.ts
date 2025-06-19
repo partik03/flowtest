@@ -4,12 +4,12 @@ import ProgressBar from 'progress';
 // Spinner instances
 export const testSpinner = ora({
   text: 'Running tests',
-  color: 'cyan'
+  color: 'cyan',
 });
 
 export const requestSpinner = ora({
   text: 'Executing request',
-  color: 'yellow'
+  color: 'yellow',
 });
 
 // Progress bar for test suite
@@ -18,7 +18,7 @@ export function createTestProgressBar(total: number): ProgressBar {
     complete: '█',
     incomplete: ' ',
     width: 30,
-    total
+    total,
   });
 }
 
@@ -28,6 +28,6 @@ export function createRequestProgressBar(): ProgressBar {
     complete: '█',
     incomplete: ' ',
     width: 20,
-    total: 100
+    total: 100,
   });
 }

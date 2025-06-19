@@ -1,17 +1,16 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { HttpResponse, TestCase} from '../types';
+import { HttpResponse, TestCase } from '../types';
 import { handleSuccessResponse, handleErrorResponse } from '../utils/response';
 import { ValidationError } from '../utils/errors';
 import { requestSpinner } from '../utils/ui';
 
-
 export async function executeRequest(test: TestCase, baseUrl: string): Promise<HttpResponse> {
   const startTime = Date.now();
 
-  if(!test.request.method || !test.request.url) {
+  if (!test.request.method || !test.request.url) {
     throw new ValidationError('Request method and URL are required');
   }
-  
+
   // Prepare request config
   const config: AxiosRequestConfig = {
     method: test.request.method,
@@ -26,15 +25,15 @@ export async function executeRequest(test: TestCase, baseUrl: string): Promise<H
     // Log request details
     requestSpinner.start(`🚀 Executing ${test.name}`);
     requestSpinner.text = `${config.method} ${config.url}`;
-    if(config.headers) {
-        console.log('Headers:', config.headers);
+    if (config.headers) {
+      console.log('Headers:', config.headers);
     }
-    if(config.data) {
-        console.log('Body:', config.data);
+    if (config.data) {
+      console.log('Body:', config.data);
     }
     // Execute request
     const response = await axios(config);
-    
+
     // Calculate duration
     const duration = Date.now() - startTime;
 
@@ -47,33 +46,8 @@ export async function executeRequest(test: TestCase, baseUrl: string): Promise<H
 
     // Return unified response format
     return handleSuccessResponse(response, startTime);
-    // return {
-    //   statusCode: response.status,
-    //   statusText: response.statusText,
-    //   headers: response.headers as Record<string, string>,
-    //   body: response.data,
-    //   timestamp: new Date(),
-    //   statusMessage: response.statusText,
-    //   protoMajor: 1,
-    //   protoMinor: 1,
-    //   duration: duration
-    // };
   } catch (error) {
     requestSpinner.fail(`Failed ${test.name}`);
     return handleErrorResponse(error, startTime);
-//     if (axios.isAxiosError(error)) {
-//       // Handle Axios errors
-//       return {
-//         statusCode: error.response?.status || 0,
-//         statusText: error.response?.statusText || 'Request failed',
-//         headers: error.response?.headers as Record<string, string> || {},
-//         body: error.response?.data || null,
-//         timestamp: new Date(),
-//         statusMessage: error.response?.statusText || 'Request failed',
-//         protoMajor: 1,
-//         protoMinor: 1,
-//       };
-//     }
-//     throw error; // Re-throw non-Axios errors
-//   }
-}}
+  }
+}

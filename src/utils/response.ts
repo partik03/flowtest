@@ -1,18 +1,10 @@
 import { AxiosResponse, AxiosError } from 'axios';
 import { HttpResponse } from '../types';
-import { 
-  HTTPError, 
-  NetworkError, 
-  TimeoutError, 
-  RequestError 
-} from './errors';
+import { HTTPError, NetworkError, TimeoutError, RequestError } from './errors';
 
-export function handleSuccessResponse(
-  response: AxiosResponse,
-  startTime: number
-): HttpResponse {
+export function handleSuccessResponse(response: AxiosResponse, startTime: number): HttpResponse {
   const duration = Date.now() - startTime;
-  
+
   return {
     statusCode: response.status,
     statusText: response.statusText,
@@ -22,14 +14,11 @@ export function handleSuccessResponse(
     timestamp: new Date(),
     protoMajor: 1,
     protoMinor: 1,
-    duration
+    duration,
   };
 }
 
-export function handleErrorResponse(
-  error: unknown,
-  startTime: number
-): HttpResponse {
+export function handleErrorResponse(error: unknown, startTime: number): HttpResponse {
   const duration = Date.now() - startTime;
 
   if (error instanceof AxiosError) {
@@ -43,11 +32,7 @@ export function handleErrorResponse(
 
     if (error.response) {
       // Server responded with error status
-      throw new HTTPError(
-        error.response.status,
-        error.response.statusText,
-        error.response.data
-      );
+      throw new HTTPError(error.response.status, error.response.statusText, error.response.data);
     }
 
     if (error.request) {
@@ -57,8 +42,5 @@ export function handleErrorResponse(
   }
 
   // Handle unknown errors
-  throw new RequestError(
-    'An unexpected error occurred',
-    error
-  );
+  throw new RequestError('An unexpected error occurred', error);
 }

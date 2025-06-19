@@ -7,4 +7,4 @@ export default new InteractiveCommand()
   .description('Code-first API testing framework')
   .version('1.0.0')
   .helpOption('-h, --help', 'Show help')
-  .addCommand(runCommand)
+  .addCommand(runCommand);
