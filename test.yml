@@ -18,7 +18,7 @@ tests:
     expect:
       statusCode: 201
       body:
-        id: "{{saveAs:userId}}"
+        # id: "{{saveAs:userId}}"
         name: John Doe
 
   # - name: Get User

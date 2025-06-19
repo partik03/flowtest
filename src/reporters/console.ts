@@ -11,10 +11,10 @@ export class ConsoleReporter {
         total++;
         if (result.passed) {
           passed++;
-          console.log(chalk.green(`  ✔ ${result.testName}`));
+          console.log(chalk.green(`  ✔ ${result.test}`));
         } else {
           failed++;
-          console.log(chalk.red(`  ✖ ${result.testName} - ${result.message}`));
+          console.log(chalk.red(`  ✖ ${result.test} - ${result.message}`));
         }
       }
       console.log('');

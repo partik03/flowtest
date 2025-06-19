@@ -15,10 +15,12 @@ import { interpolateVariables } from '../utils/variables';
 export default async function runTests(
   config: YamlConfig,
   cliEnv: Record<string, string>,
-  dotEnv: Record<string, string>
-): Promise<any> {
+  dotEnv: Record<string, string>,
+  filterFn ?: (testName: string) => boolean
+): Promise<any[]> {
   try {
     const results: any[] = [];
+
     // Start test suite spinner
     testSpinner.start('Loading test configuration');
     testSpinner.succeed('Configuration loaded');
@@ -31,8 +33,10 @@ export default async function runTests(
     let passed = 0;
     let failed = 0;
 
+    const filteredTests = filterFn ? config.tests.filter((t) => filterFn(t.name)) : config.tests;
+
     // Run each test
-    for (const test of config.tests) {
+    for (const test of filteredTests) {
       const context: InterpolationContext = {
         saved: saved,
         dotenvEnv: dotEnv,
@@ -59,7 +63,7 @@ export default async function runTests(
           }
           failed++;
         }
-        return results.push({
+        results.push({
           test: test.name,
           passed: result.passed,
           message: result.message,
@@ -68,6 +72,13 @@ export default async function runTests(
         });
       } catch (error: any) {
         progressBar.tick();
+        results.push({
+          test: test.name,
+          passed: false,
+          message: error.message,
+          expected: undefined,
+          actual: undefined,
+        });
         console.log(chalk.red(`\n❌ ${test.name} [ERROR]`));
         console.log(chalk.red(`   ${error.message}`));
         failed++;
@@ -93,7 +104,7 @@ export default async function runTests(
         }
       }
     }
-
+    return results;
     // Print summary
     console.log('\n📊 Test Summary:');
     console.log(`Total: ${config.tests.length}`);

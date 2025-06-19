@@ -11,7 +11,7 @@ export class JsonReporter {
         else failed++;
         results.push({
           file,
-          test: result.testName,
+          test: result.test,
           status: result.passed ? 'passed' : 'failed',
           error: result.passed ? undefined : result.message,
         });

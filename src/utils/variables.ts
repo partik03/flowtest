@@ -40,12 +40,8 @@ export function interpolateString(str: string, context: InterpolationContext): s
     return str;
   }
   return str.replace(/\{\{([^}]+)\}\}/g, (match, path) => {
-    console.log('Found variable:', match, 'path:', path);
-
     // Handle random.string(length)
     if (path.startsWith('random.string')) {
-      console.log('random.string', path);
-
       const lengthMatch = path.match(/random\.string\((\d+)\)/);
       const length = lengthMatch ? parseInt(lengthMatch[1]) : 10;
       return Math.random()
@@ -55,8 +51,6 @@ export function interpolateString(str: string, context: InterpolationContext): s
 
     // Handle random.number(min,max)
     if (path.startsWith('random.number')) {
-      console.log('random.number', path);
-
       const numbersMatch = path.match(/random\.number\((\d+),(\d+)\)/);
       if (numbersMatch) {
         const min = parseInt(numbersMatch[1]);
@@ -75,7 +69,6 @@ export function interpolateString(str: string, context: InterpolationContext): s
     }
 
     if (path in context.yaml && context.yaml[path] !== undefined) {
-      console.log('yamlVariables', path);
       return String(context.yaml[path]);
     }
     if (path in context.cliEnv && context.cliEnv[path] !== undefined) {

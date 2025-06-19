@@ -36,8 +36,6 @@ export default class YamlParser {
       if (parsed.variables && Object.keys(parsed.variables).length > 0) {
         this.context.yaml = parsed.variables || {};
       }
-      console.log('envVariables', this.context.yaml);
-
       this.validateConfig(parsed);
       return interpolateVariables(parsed, this.context);
     } catch (error) {
