@@ -32,6 +32,7 @@ export interface HttpResponse {
   timestamp: Date;
   statusText: string;
   duration?: number;
+  jsonpath?: Record<string, any>;
 }
 
 export interface OutputBinary {

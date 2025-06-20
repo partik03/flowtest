@@ -4,4 +4,5 @@ export interface AssertionResult {
   expected?: any;
   actual?: any;
   savedVariables?: Record<string, any>;
+  path?: string[];
 }

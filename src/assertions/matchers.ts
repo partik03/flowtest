@@ -62,3 +62,13 @@ export function assertHeaders(
     actual,
   };
 }
+
+export function isRegex(value: any): boolean {
+  return typeof value === 'string' && /^\/.*\/[gimsuy]*$/.test(value);
+}
+
+export function toRegExp(value: string): RegExp {
+  const match = value.match(/^\/(.*)\/([gimsuy]*)$/);
+  if (!match) throw new Error(`Invalid regex string: ${value}`);
+  return new RegExp(match[1], match[2]);
+}
