@@ -16,7 +16,8 @@ export default async function runTests(
   config: YamlConfig,
   cliEnv: Record<string, string>,
   dotEnv: Record<string, string>,
-  filterFn ?: (testName: string) => boolean
+  filterFn ?: (testName: string) => boolean,
+  defaultTimeout?: number
 ): Promise<any[]> {
   try {
     const results: any[] = [];
@@ -46,8 +47,12 @@ export default async function runTests(
       try {
         console.log(`\n🧪 Running test: ${test.name}`);
         const interpolatedTest = interpolateVariables(test, context);
-        const response = await executeRequest(interpolatedTest, config.baseUrl || '');
-        const result = assertResponse(test, response, saved);
+        const startTime = Date.now();
+        const testTimeout = test.request.timeout !== undefined ? test.request.timeout : defaultTimeout || 10000;
+        const response = await executeRequest(interpolatedTest, config.baseUrl || '', testTimeout);
+        const duration = Date.now() - startTime;
+        const testContext = { responseTime: duration };
+        const result = assertResponse(test, response, saved, testContext);
 
         progressBar.tick();
         // Log test result

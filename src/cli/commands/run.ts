@@ -39,6 +39,12 @@ export default new InteractiveCommand()
     // }
     const projectConfig = loadProjectConfig();
     const mergedConfig = mergeConfig(options, projectConfig);
+    // Use mergedConfig.parallel, mergedConfig.watch, mergedConfig.output, etc.
+    const isParallel = mergedConfig.parallel;
+    const isWatch = mergedConfig.watch;
+    const outputFormat = mergedConfig.output;
+    const defaultTimeout = mergedConfig.timeout || 10000;
+
     const cliEnv: Record<string, string> = {};
     try {
       dotenvConfig({ path: mergedConfig.defaultEnv || '.env' });
@@ -82,12 +88,13 @@ export default new InteractiveCommand()
         await Promise.all(testFiles.map(async (filePath) => {
           const config = yamlParser.parse(filePath, cliEnv, dotEnv);
           let tests = config.tests;
+          let filterFn: ((testName: string) => boolean) | undefined = undefined;
           if (options.grep) {
             const pattern = new RegExp(options.grep, 'i');
-            tests = tests.filter((t: any) => pattern.test(t.name));
+            filterFn = (testName: string) => pattern.test(testName);
           }
           config.tests = tests;
-          const results = await runTests(config, cliEnv, dotEnv);
+          const results = await runTests(config, cliEnv, dotEnv, filterFn, defaultTimeout);
           allResults.push({ file: filePath, results });
         }));
       } else {

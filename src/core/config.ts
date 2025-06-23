@@ -21,5 +21,14 @@ export function loadProjectConfig(): ProjectConfig {
 
 export function mergeConfig(cliOptions: Record<string, any>, projectConfig: ProjectConfig): ProjectConfig {
   // CLI flags take precedence
-  return { ...projectConfig, ...cliOptions };
+  return {
+    ...projectConfig,
+    ...cliOptions,
+    // For booleans, handle undefined/false correctly
+    parallel: cliOptions.parallel !== undefined ? cliOptions.parallel : projectConfig.parallel,
+    watch: cliOptions.watch !== undefined ? cliOptions.watch : projectConfig.watch,
+    output: cliOptions.output || projectConfig.output || "console",
+    timeout: cliOptions.timeout !== undefined ? Number(cliOptions.timeout) : projectConfig.timeout,
+    defaultEnv: cliOptions.defaultEnv || projectConfig.defaultEnv || ".env"
+  };
 }

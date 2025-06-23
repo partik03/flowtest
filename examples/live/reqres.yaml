@@ -1,0 +1,24 @@
+name: ReqRes Live Suite
+baseUrl: https://reqres.in/api
+
+tests:
+  - name: List Users
+    request:
+      method: GET
+      url: /users?page=2
+    expect:
+      status: 200
+      jsonpath:
+        $.page: 2
+
+  - name: Create User
+    request:
+      method: POST
+      url: /users
+      body:
+        name: "morpheus"
+        job: "leader"
+    expect:
+      status: 201
+      jsonpath:
+        $.name: "morpheus"

@@ -1,6 +1,6 @@
 import { InteractiveCommand } from 'interactive-commander';
 import runCommand from './commands/run';
-import { initCommand } from './commands/init';
+import initCommand from './commands/init';
 import chalk from 'chalk';
 
 export default new InteractiveCommand()
@@ -8,6 +8,7 @@ export default new InteractiveCommand()
   .description("APIFlow: Code-first API testing CLI")
   .version("1.0.0")
   .addCommand(runCommand)
+  .addCommand(initCommand)
   .helpOption("-h, --help", "Show help")
   .on('--help', () => {
     console.log(chalk.bold("\nOptions:"));

@@ -1,0 +1,45 @@
+name: {{suiteName}}
+baseUrl: {{baseUrl}}
+
+tests:
+  - name: {{testName}}
+    request:
+      method: GET
+      url: /ping
+    expect:
+      status: 200
+      body:
+        message: "pong"
+      responseTime: 1000
+
+  - name: get-users
+    request:
+      method: GET
+      url: /users
+      headers:
+        Authorization: "Bearer {{API_KEY}}"
+    expect:
+      status: 200
+      body:
+        type: "array"
+      headers:
+        content-type: "application/json"
+      responseTime: 2000
+
+  - name: create-user
+    request:
+      method: POST
+      url: /users
+      headers:
+        Content-Type: "application/json"
+        Authorization: "Bearer {{API_KEY}}"
+      body:
+        name: "John Doe"
+        email: "john@example.com"
+    expect:
+      status: 201
+      body:
+        name: "John Doe"
+        email: "john@example.com"
+      saveAs:
+        userId: "$.id" 

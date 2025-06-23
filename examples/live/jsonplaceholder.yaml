@@ -1,0 +1,19 @@
+name: JSONPlaceholder Live Suite
+baseUrl: https://jsonplaceholder.typicode.com
+
+tests:
+  - name: Get Posts
+    request:
+      method: GET
+      url: /posts
+    expect:
+      status: 200
+      body:
+        type: "array"
+
+  - name: Get 404
+    request:
+      method: GET
+      url: /posts/999999
+    expect:
+      status: 404

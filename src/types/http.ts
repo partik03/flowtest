@@ -19,6 +19,7 @@ export interface HttpRequest {
   binary?: string;
   form?: FormData[];
   timestamp: Date;
+  timeout?: number;
 }
 
 export interface HttpResponse {
@@ -33,6 +34,7 @@ export interface HttpResponse {
   statusText: string;
   duration?: number;
   jsonpath?: Record<string, any>;
+  responseTime?: number;
 }
 
 export interface OutputBinary {

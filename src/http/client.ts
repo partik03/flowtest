@@ -3,8 +3,9 @@ import { HttpResponse, TestCase } from '../types';
 import { handleSuccessResponse, handleErrorResponse } from '../utils/response';
 import { ValidationError } from '../utils/errors';
 import { requestSpinner } from '../utils/ui';
+import { NetworkError } from '../utils/errors';
 
-export async function executeRequest(test: TestCase, baseUrl: string): Promise<HttpResponse> {
+export async function executeRequest(test: TestCase, baseUrl: string, testTimeout: number): Promise<HttpResponse> {
   const startTime = Date.now();
 
   if (!test.request.method || !test.request.url) {
@@ -17,7 +18,7 @@ export async function executeRequest(test: TestCase, baseUrl: string): Promise<H
     url: `${baseUrl}${test.request.url}`,
     headers: test.request.header,
     data: test.request.body,
-    timeout: 5000, // Default timeout
+    timeout: testTimeout, // Default timeout
     validateStatus: (status) => status >= 200 && status < 600, // Accept all status codes
   };
 

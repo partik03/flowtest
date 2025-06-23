@@ -86,17 +86,17 @@ export function assertResponse(
   }
 
   // Response time
-  // if (expect.responseTime !== undefined && testContext?.responseTime !== undefined) {
-  //   if (testContext.responseTime > expect.responseTime) {
-  //     return {
-  //       passed: false,
-  //       message: formatAssertionError(['responseTime'], `<${expect.responseTime}`, testContext.responseTime),
-  //       expected: `<${expect.responseTime}`,
-  //       actual: testContext.responseTime,
-  //       path: ['responseTime'],
-  //     };
-  //   }
-  // }
+  if (expect.responseTime !== undefined && testContext?.responseTime !== undefined) {
+    if (testContext.responseTime > expect.responseTime) {
+      return {
+        passed: false,
+        message: formatAssertionError(['responseTime'], `<${expect.responseTime}`, testContext.responseTime),
+        expected: `<${expect.responseTime}`,
+        actual: testContext.responseTime,
+        path: ['responseTime'],
+      };
+    }
+  }
 
   // Headers
   if (expect.headers !== undefined) {
